@@ -3,10 +3,12 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService } = require('../services');
+const Utils = require('../utils/response');
+const { U01 } = require('../messages/user.json');
 
 const createUser = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
-  res.status(httpStatus.CREATED).send(user);
+  res.status(httpStatus.CREATED).send(Utils.success(user, U01, 'U01'));
 });
 
 const getUsers = catchAsync(async (req, res) => {

@@ -1,18 +1,20 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { authService, userService, tokenService, emailService } = require('../services');
+const { U01, U02 } = require('../messages/user.json');
+const Utils = require('../utils/response');
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
   const tokens = await tokenService.generateAuthTokens(user);
-  res.status(httpStatus.CREATED).send({ user, tokens });
+  res.status(httpStatus.CREATED).send(Utils.success({ user, tokens }, U01, 'U01'));
 });
 
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const tokens = await tokenService.generateAuthTokens(user);
-  res.send({ user, tokens });
+  res.status(httpStatus.CREATED).send(Utils.success({ user, tokens }, U02, 'U02'));
 });
 
 const logout = catchAsync(async (req, res) => {

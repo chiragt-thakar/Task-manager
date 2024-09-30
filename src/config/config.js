@@ -37,10 +37,24 @@ module.exports = {
   port: envVars.PORT,
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
+    username: envVars.MONGODB_USERNAME,
+    password: envVars.MONGODB_PASSWORD,
+    database: envVars.MONGODB_DATABASE,
+    admin_url: envVars.MONGODB_ADMIN_URL,
+    host: envVars.MONGODB_HOST,
+
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
+    },
+  },
+  api: {
+    adminUser: {
+      firstName: envVars.ADMIN_FIRST_NAME,
+      lastName: envVars.ADMIN_LAST_NAME,
+      email: envVars.ADMIN_EMAIL,
+      password: envVars.ADMIN_PASSWORD,
     },
   },
   jwt: {
